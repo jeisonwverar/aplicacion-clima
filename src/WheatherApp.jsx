@@ -8,9 +8,10 @@ function App() {
   const [dataClimate, setDataClimate] = useState(null)
 
   const urlBase=`https://api.openweathermap.org/data/2.5/weather`
-  const  API_KEY='0b0e390c5d679a96646fd17b00fc2698';
+  const  API_KEY=import.meta.env.VITE_API_WHEATER_KEY;
+  const dlKelvin=273.15;
  
-
+  
 
   const handleChangeCity=(e)=>{
     
@@ -36,8 +37,8 @@ function App() {
 
     
   }
-
-  console.log(dataClimate)
+   
+ console.log(dataClimate)
 
 
 
@@ -51,6 +52,19 @@ function App() {
           onChange={handleChangeCity}/>
           <button type="submit">Buscar</button>
         </form>
+        {
+          dataClimate&& (
+            <div>
+              <h2>
+                {dataClimate.name}
+              </h2>
+              <p>Temperatura: {parseInt(dataClimate?.main.temp-dlKelvin)} °C </p>
+              <p>Condición meteorologica {dataClimate.weather[0].description}</p>
+              <img src={`https://openweathermap.org/img/wn/${dataClimate.weather[0].icon}@2x.png`}alt="icon" />
+            </div>
+
+          )
+        }
     </div>
   )
 }
